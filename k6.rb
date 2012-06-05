@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'imlib2'
 class Transform
+  #---------------拡大処理と位置を示すクラス定数---------------
   PRIORITY_LONG = 	1
   PRIORITY_SHORT = 	2
   HEIGHT_FULL = 	3
@@ -16,36 +17,42 @@ class Transform
   MID_H = 			15
   NONE =			20
   def calcsize (inw, inh, outw, outh, deform, posw, posh)
+    #---------------横長なら"1"縦長なら"0"正方形なら"2"---------------
     inx = iny = outx = outy = nil
-    if inh < inw then#1なら横長0なら縦長
+    if inh < inw then
       edge = "1"
     elsif inh > inw then
       edge = "0"
     else
       edge = "2"
     end
-    
+    #---------------拡大処理---------------
     case deform
-      when PRIORITY_LONG then#長い方優先（余白を作る）PRIORITY_LONG
+      #----------長い方優先（余白を作る）----------
+      when PRIORITY_LONG then
+        #-----位置の前処理と拡大処理-----
         if edge == "1" then
-          posw = NONE#横長なら横の位置決め不要
+          posw = NONE
           outh = outw.to_f / inw.to_f * inh.to_f
         else
-          posh = NONE#縦長なら縦の位置決め不要
+          posh = NONE
           outw = outh.to_f / inh.to_f * inw.to_f
         end
         inx = iny = outx = outy = 0
-      when PRIORITY_SHORT then#短い方優先（余白を切る）PRIORITY_SHORT
-        if edge == "1" then#横長なら縦の位置決め不要
+      #----------短い方優先（余白を切る）----------
+      when PRIORITY_SHORT then
+        #-----位置の前処理-----
+        if edge == "1" then
           posh = NONE
-          posw = NONE if posw == "MID_W"#元々中央の計算なので
+          posw = NONE if posw == MID_W
         else
           posw = NONE
-          posh = NONE if posh == "MID_H"#元々中央の計算なので
+          posh = NONE if posh == MID_H
         end
-
+        #-----拡大処理-----
         if edge =="1" then
           inx = (outw.to_f - inw.to_f) / 2.0
+          inw_bak = inw if posw == RIGHT
           inw = outw
           iny = 0
         elsif edge == "0" then
@@ -59,13 +66,14 @@ class Transform
           inh = outh
         end
         outx = outy = 0
-      when HEIGHT_FULL then#縦を100%使う（横が長ければ切り、短ければ余らせる）HEIGHT_FULL
-        posh = NONE if edge == "1"#横のみ必要
-        
-      when WIDTH_FULL then#横を100%使う（縦が長ければ切り、短ければ余らせる）WIDTH_FULL
-        posw = NONE if edge == "1"#縦のみ必要
-        
-      when WITHOUT_DEFORM then#拡大も縮小もしないWITHOUT_DEFORM
+      #----------縦を100%使う（横が長ければ切り、短ければ余らせる）----------
+      when HEIGHT_FULL then
+        posh = NONE if edge == "1"
+      #----------横を100%使う（縦が長ければ切り、短ければ余らせる）----------
+      when WIDTH_FULL then
+        posw = NONE if edge == "1"
+      #----------拡大も縮小もしない----------
+      when WITHOUT_DEFORM then
         if inw > outw then
           inx = (inw - outw) / 2.0
         else
@@ -82,27 +90,35 @@ class Transform
         iny = 0 if iny == nil
         outx = 0 if outx == nil
         outy = 0 if outy == nil
-      when FILL then#縦も横も合わせるFILL
+      #----------縦も横も合わせる----------
+      when FILL then
         posh = posw = NONE
         inx = iny = outx = outy = 0
       end
+      
+      
+      #----------横位置の処理----------
       case posw
         when LEFT then
           inx = 0
         when MID_W then
         when RIGHT then
-          iny = inw - outw
+          inx = inw_bak.abs - outw 
         when NONE then
       end
+
+      #----------縦位置の処理----------
       case posh
       when UP then
         iny = 0
       when MID_H then
+        outy = (outh.to_f - inh.to_f ) / 2.0
       when LOW then
-        iny = inh - outh
+        outy = inh - outh
       when NONE then
       end
-
+      
+     #---------絶対値＆整数に変換----------
      inx = inx.abs
      iny = iny.abs
      inw = inw.abs
@@ -120,7 +136,6 @@ class Transform
      outy = outy.truncate
      outw = outw.truncate
      outh = outh.truncate
-
   return [inx, iny, inw, inh, outx, outy, outw, outh]
 end
   

@@ -32,16 +32,16 @@ class TC_Imlib2_test < Test::Unit::TestCase
   
   def test_priority_short_pos_leftup
     ret = @obj.calcsize(1045, 387, 480, 387, Transform::PRIORITY_SHORT, Transform::LEFT, Transform::UP)
-    assert_equal([0, 0, 480, 387, 0, 0, 480, 360])
+    assert_equal([0, 0, 480, 387, 0, 0, 480, 360], ret)
   end
   
   def test_priority_short_pos_middle
-    ret = @obj.calcsize(1045, 387, 480, 387, Transform::PRIORITY_SHORT, Transform::MDI_W, Transform::MID_H)
+    ret = @obj.calcsize(1045, 387, 480, 387, Transform::PRIORITY_SHORT, Transform::MID_W, Transform::MID_H)
     assert_equal([282, 0, 480, 387, 0, 0, 480, 360], ret)
   end
   
   def test_priority_short_pos_rightdown
-    ret = @obj.calcsize(1045, 387, 480, 387, Transform::PRIORITY_SHORT, Transform::RIGHT, Transform::DOWN)
+    ret = @obj.calcsize(1045, 387, 480, 387, Transform::PRIORITY_SHORT, Transform::RIGHT, Transform::LOW)
     assert_equal([565, 0, 480, 387, 0, 0, 480, 360], ret)
   end
   
@@ -52,11 +52,11 @@ class TC_Imlib2_test < Test::Unit::TestCase
   
   def test_priority_long_pos_middle
     ret = @obj.calcsize(1045, 387, 480, 387, Transform::PRIORITY_SHORT, Transform::MID_W, Transform::MID_H)
-    assert_equal([0, 0, 1045, 387, 0, 105, 480, 177], ret])
+    assert_equal([0, 0, 1045, 387, 0, 105, 480, 177], ret)
   end
   
   def test_priority_long_pos_rightdown
-    ret = @obj.calcsize(1045, 387, 480, 387, Transform::PRIORITY_SHORT, Transform::RIGHT, Transform::DOWN)
+    ret = @obj.calcsize(1045, 387, 480, 387, Transform::PRIORITY_SHORT, Transform::RIGHT, Transform::LOW)
     assert_equal([0, 0, 1045, 387, 0, 210, 480, 177], ret)
   end
 end

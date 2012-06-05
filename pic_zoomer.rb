@@ -52,7 +52,7 @@ class Transform
         #-----ägëÂèàóù-----
         if edge =="1" then
           inx = (outw.to_f - inw.to_f) / 2.0
-          inw_bak = inw if posw == RIGHT
+          inw_tmp = inw if posw == RIGHT
           inw = outw
           iny = 0
         elsif edge == "0" then
@@ -103,7 +103,7 @@ class Transform
           inx = 0
         when MID_W then
         when RIGHT then
-          inx = inw_bak.abs - outw 
+          inx = inw_tmp.abs - outw 
         when NONE then
       end
 

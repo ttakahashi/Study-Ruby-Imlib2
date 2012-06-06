@@ -15,23 +15,27 @@ class Transform
   LEFT = 			13
   RIGHT =			14
   MID_H = 			15
-  NONE =			20
+  NONE =			16
+  
+  YOKO = 			20
+  TATE = 			21
+  SQUARE =			22
   def calcsize (inw, inh, outw, outh, deform, posw, posh)
-    #---------------â°í∑Ç»ÇÁ"1"ècí∑Ç»ÇÁ"0"ê≥ï˚å`Ç»ÇÁ"2"---------------
+    #---------------â°í∑Ç»ÇÁYOKOècí∑Ç»ÇÁTATEê≥ï˚å`Ç»ÇÁSQUARE---------------
     inx = iny = outx = outy = nil
     if inh < inw then
-      edge = "1"
+      edge = YOKO
     elsif inh > inw then
-      edge = "0"
+      edge = TATE
     else
-      edge = "2"
+      edge = SQUARE
     end
     #---------------ägëÂèàóù---------------
     case deform
       #----------í∑Ç¢ï˚óDêÊÅió]îíÇçÏÇÈÅj----------
       when PRIORITY_LONG then
         #-----à íuÇÃëOèàóùÇ∆ägëÂèàóù-----
-        if edge == "1" then
+        if edge == YOKO then
           posw = NONE
           outh = outw.to_f / inw.to_f * inh.to_f
         else
@@ -42,7 +46,7 @@ class Transform
       #----------íZÇ¢ï˚óDêÊÅió]îíÇêÿÇÈÅj----------
       when PRIORITY_SHORT then
         #-----à íuÇÃëOèàóù-----
-        if edge == "1" then
+        if edge == YOKO then
           posh = NONE
           posw = NONE if posw == MID_W
         else
@@ -50,12 +54,12 @@ class Transform
           posh = NONE if posh == MID_H
         end
         #-----ägëÂèàóù-----
-        if edge =="1" then
+        if edge ==YOKO then
           inx = (outw.to_f - inw.to_f) / 2.0
           inw_tmp = inw if posw == RIGHT
           inw = outw
           iny = 0
-        elsif edge == "0" then
+        elsif edge == TATE then
           inx = 0
           iny = (inh.to_f - outh.to_f) / 2.0
           inh = outh
@@ -68,10 +72,10 @@ class Transform
         outx = outy = 0
       #----------ècÇ100%égÇ§Åiâ°Ç™í∑ÇØÇÍÇŒêÿÇËÅAíZÇØÇÍÇŒó]ÇÁÇπÇÈÅj----------
       when HEIGHT_FULL then
-        posh = NONE if edge == "1"
+        posh = NONE if edge == YOKO
       #----------â°Ç100%égÇ§ÅiècÇ™í∑ÇØÇÍÇŒêÿÇËÅAíZÇØÇÍÇŒó]ÇÁÇπÇÈÅj----------
       when WIDTH_FULL then
-        posw = NONE if edge == "1"
+        posw = NONE if edge == YOKO
       #----------ägëÂÇ‡èkè¨Ç‡ÇµÇ»Ç¢----------
       when WITHOUT_DEFORM then
         if inw > outw then
@@ -136,7 +140,18 @@ class Transform
      outy = outy.truncate
      outw = outw.truncate
      outh = outh.truncate
-  return [inx, iny, inw, inh, outx, outy, outw, outh]
+     
+     
+     ret_hash = Hash.new
+     ret_hash.store("inx", inx)
+ret_hash.store("iny", iny)
+ret_hash.store("inw", inw)
+ret_hash.store("inh", inh)
+ret_hash.store("outx", outx)
+ret_hash.store("outy", outy)
+ret_hash.store("outw", outw)
+ret_hash.store("outh", outh)
+  return ret_hash
 end
   
 =begin

@@ -9,7 +9,6 @@ class Transform
   WIDTH_FULL = 		4
   WITHOUT_DEFORM =	5
   FILL =		6
-  
   UP = 			10
   MID_W = 		11
   LOW = 		12
@@ -17,11 +16,11 @@ class Transform
   RIGHT =		14
   MID_H = 		15
   NONE =		16
-   
   YOKO = 		20
   TATE = 		21
   SQUARE =		22
-  
+
+
   def priority_long (edge, posw, outh, outw, inw, inh, posh)
         #-----ˆÊ’u‚Ì‘Oˆ—‚ÆŠg‘åˆ—-----
     if edge == YOKO then
@@ -225,4 +224,5 @@ class Transform
     ret.delete("posh") if ret.key?("posh")
     return ret
   end
+
 end

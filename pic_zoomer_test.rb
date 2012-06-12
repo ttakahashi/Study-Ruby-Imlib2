@@ -72,30 +72,3 @@ class TC_Imlib2_test < Test::Unit::TestCase
   end
 =end
 end
-
-
-=begin
-class TC_k6_is_nil < Test::Unit::TestCase
-  def setup
-    @obj = Transform.new
-    @obj.init(480, 360)
-  end
-  
-  def teardown
-  end
-  
-  def test_init
-    assert_not_nil(:canvas)
-    assert_not_nil(:image)
-    assert_not_nil(:dst)
-    assert_not_nil(:src)
-  end
-  
-  def test_calcsize
-    assert_not_nil(:inimagew)
-    assert_not_nil(:inimageh)
-    assert_not_nil(:outimagew)
-    assert_not_nil(:outimageh)
-  end
-end
-=end

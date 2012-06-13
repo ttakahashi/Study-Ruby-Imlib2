@@ -21,148 +21,107 @@ class Transform
   SQUARE =		22
 
 
-  def priority_long (edge, posw, outh, outw, inw, inh, posh)
+  def priority_long (ret)
         #-----ˆÊ’u‚Ì‘Oˆ—‚ÆŠg‘åˆ—-----
-    if edge == YOKO then
-      posw = NONE
-      outh = outw.to_f / inw.to_f * inh.to_f
+    if ret["edge"] == YOKO then
+      ret["posw"] = NONE
+      ret["outh"] = ret["outw"].to_f / ret["inw"].to_f * ret["inh"].to_f
     else
       posh = NONE
-      outw = outh.to_f / inh.to_f * inw.to_f
+      ret["outw"] = ret["outh"].to_f / ret["inh"].to_f * ret["inw"].to_f
     end
-    inx = iny = outx = outy = 0
-    ret = Hash.new
-    ret.default = 0
-    ret.store("inx", inx)
-    ret.store("iny", iny)
-    ret.store("outx", outx)
-    ret.store("outy", outy)
-    ret.store("edge", edge)
-    ret.store("outh", outh)
-    ret.store("posw", posw)
-    ret.store("posh", posh)
-    ret.store("inw", inw)
-    ret.store("inh", inh)
-    ret.store("outw", outw)
+    ret["inx"] = ret["iny"] = ret["outx"] = ret["outy"] = 0
     return ret
   end
 
-  def priority_short (edge, posh, posw, inx, inw, outw, iny, inh, outh, outx, outy)
+  def priority_short (ret)
     #-----ˆÊ’u‚Ì‘Oˆ—-----
-    if edge == YOKO then
-      posh = NONE
-      posw = NONE if posw == MID_W
+    if ret["edge"] == YOKO then
+      ret["posh"] = NONE
+      ret["posw"] = NONE if ret["posw"] == MID_W
     else
-      posw = NONE
-      posh = NONE if posh == MID_H
+      ret["posw"] = NONE
+      ret["posh"] = NONE if ret["posh"] == MID_H
     end
     #-----Šg‘åˆ—-----
-    if edge ==YOKO then
-      inx = (outw.to_f - inw.to_f) / 2.0
-      inw_tmp = inw if posw == RIGHT
-      inw = outw
-      iny = 0
-    elsif edge == TATE then
-      inx = 0
-      iny = (inh.to_f - outh.to_f) / 2.0
-      inh = outh
+    if ret["edge"] ==YOKO then
+      ret["inx"] = (ret["outw"].to_f - ret["inw"].to_f) / 2.0
+      ret["inw_tmp"] = ret["inw"] if ret["posw"] == RIGHT
+      ret["inw"] = ret["outw"]
+      ret["iny"] = 0
+    elsif ret["edge"] == TATE then
+      ret["inx"] = 0
+      ret["iny"] = (ret["inh"].to_f - ret["outh"].to_f) / 2.0
+      ret["inh"] = ret["outh"]
     else
-      inx = 0
-      inw = outw
-      iny = (inh.to_f - outh.to_f) / 2.0
-      inh = outh
+      ret["inx"] = 0
+      ret["inw"] = ret["outw"]
+      ret["iny"] = (ret["inh"].to_f - ret["outh"].to_f) / 2.0
+      ret["inh"] = ret["outh"]
     end
-      outx = outy = 0
-      ret = Hash.new
-      ret.default = 0
-      ret.store("edge", edge)
-      ret.store("inx", inx)
-      ret.store("inw", inw)
-      ret.store("outw", outw)
-      ret.store("iny", iny)
-      ret.store("inh", inh)
-      ret.store("outh", outh)
-      ret.store("outx", outx)
-      ret.store("outy", outy)
-      ret.store("inw_tmp", inw_tmp)
-      ret.store("posw", posw)
-      ret.store("posh", posh)
+      ret["outx"] = ret["outy"] = 0
     return ret
   end
 
-  def without_deform (inw, outw, inx, outx, inh, outh, outy, iny)
-    if inw > outw then
-      inx = (inw - outw) / 2.0
+  def without_deform (ret)
+    if ret["inw"] > ret["outw"] then
+      ret["inx"] = (ret["inw"] - ret["outw"]) / 2.0
     else
-      outx = (outw - inw) / 2.0
+      ret["outx"] = (ret["outw"] - ret["inw"]) / 2.0
     end
-    if inh > outh then
-      iny = (inh - outh) / 2.0
+    if ret["inh"] > ret["outh"] then
+      ret["iny"] = (ret["inh"] - ret["outh"]) / 2.0
     else
-      outy = (outh - inh ) / 2.0
+      ret["outy"] = (ret["outh"] - ret["inh"] ) / 2.0
     end
-    outw = inw
-    outh = inh
-    inx = 0 if inx == nil
-    iny = 0 if iny == nil
-    outx = 0 if outx == nil
-    outy = 0 if outy == nil
-    ret = Hash.new
+    ret["outw"] = ret["inw"]
+    ret["outh"] = ret["inh"]
+    ret["inx"] = 0 if ret["inx"] == nil
+    ret["iny"] = 0 if ret["iny"] == nil
+    ret["outx"] = 0 if ret["outx"] == nil
+    ret["outy"] = 0 if ret["outy"] == nil
+    return ret
+  end
+
+  def fill(ret)
     ret.default = 0
-    ret.store("inw", inw)
-    ret.store("outw", outw)
-    ret.store("inx", inx)
-    ret.store("outx", outx)
-    ret.store("inh", inh)
-    ret.store("outh", outh)
-    ret.store("outy", outy)
-    ret.store("iny", iny)
-    ret.store("outx", outx)
     return ret
   end
 
-  def fill(inw, inh, outw, outh)
-    ret = Hash.new
+  def calcsize (ret)
     ret.default = 0
-    ret.store("inw", inw)
-    ret.store("inh", inh)
-    ret.store("outw", outw)
-    ret.store("outh", outh)
-    return ret
-  end
-
-  def calcsize (inw, inh, outw, outh, deform, posw, posh)
     #---------------c’·‚©‰¡’·‚©³•ûŒ`‚©’²‚×‚é---------------
-    inx = iny = outx = outy = nil
-    if inh < inw then
-      edge = YOKO
-    elsif inh > inw then
-      edge = TATE
+    #ret["iny"] = ret["outx"] = ret["outy"] = nil
+    if ret["inh"] < ret["inw"] then
+      ret["edge"] = YOKO
+    elsif ret["inh"] > ret["inw"] then
+      ret["edge"] = TATE
     else
-      edge = SQUARE
+      ret["edge"] = SQUARE
     end
     
     
     #---------------Šg‘åˆ—---------------
-    case deform
+    case ret["deform"]
       #----------’·‚¢•û—Dæi—]”’‚ğì‚éj----------
       when PRIORITY_LONG then
-        ret = priority_long(edge, posw, outh, outw, inw, inh, posh)
+        ret = priority_long("edge" => ret["edge"], "posw" => ret["posw"], "outh" => ret["outh"], "outw" => ret["outw"], "inw" => ret["inw"], "inh" => ret["inh"], "posh" => ret["posh"])
       #----------’Z‚¢•û—Dæi—]”’‚ğØ‚éj----------
       when PRIORITY_SHORT then
-        ret = priority_short(edge, posh, posw, inx, inw, outw, iny, inh, outh, outx, outy)
+        ret = priority_short("edge" => ret["edge"], "posh" => ret["posh"], "posw" => ret["posw"], "inx" => ret["inx"], "inw" => ret["inw"], "outw" => ret["outw"], "iny" => ret["iny"], "inh" => ret["inh"], "outh" => ret["outh"], "outx" => ret["outx"], "outy" => ret["outy"])
       #----------c‚ğ100%g‚¤i‰¡‚ª’·‚¯‚ê‚ÎØ‚èA’Z‚¯‚ê‚Î—]‚ç‚¹‚éj----------
       when HEIGHT_FULL then
-        posh = NONE if edge == YOKO
+        ret["posh"] = NONE if ret["edge"] == YOKO
       #----------‰¡‚ğ100%g‚¤ic‚ª’·‚¯‚ê‚ÎØ‚èA’Z‚¯‚ê‚Î—]‚ç‚¹‚éj----------
       when WIDTH_FULL then
-        posw = NONE if edge == YOKO
+        ret["posw"] = NONE if ret["edge"] == YOKO
       #----------Šg‘å‚àk¬‚à‚µ‚È‚¢----------
       when WITHOUT_DEFORM then
-        ret = without_deform(inw, outw, inx, outx, inh, outh, outy, iny)
+        ret = without_deform("inw" => ret["inw"] , "outw" => ret["outw"], "inx" => ret["inx"], "outx" => ret["outx"], "inh" => ret["inh"], "outh" => ret["outh"], "outy" => ret["outy"], "iny" => ret["iny"])
       #----------c‚à‰¡‚à‡‚í‚¹‚é----------
       when FILL then
-        ret = fill(inw, inh, outw, outh)
+
+        ret = fill("inw" => ret["inw"], "inh" => ret["inh"], "outw" => ret["outw"], "outh" => ret["outh"])
     end
 
 
@@ -188,19 +147,15 @@ class Transform
     end
       
    #---------â‘Î’l•®”‚É•ÏŠ·----------
+    ret.delete("edge") if ret.has_key?("edge")
+    ret.delete("inw_tmp") if ret.has_key?("inw_tmp")
+    ret.delete("posw") if ret.has_key?("posw")
+    ret.delete("posh") if ret.has_key?("posh")
+    ret.delete("deform") if ret.has_key?("deform")
 
-    ret.store("inx", inx) if inx == "nil"
-    ret.store("iny", iny) if iny == "nil"
-    ret.store("inw", inw) if inw == "nil"
-    ret.store("inh", inh) if inh == "nil"
-    ret.store("outx", outx) if outx == "nil"
-    ret.store("outy", outy) if outy == "nil"
-    ret.store("outw", outw) if outw == "nil"
-    ret.store("outh", outh) if outh == "nil"
-    ret.store("edge", edge) if edge == "nil"
-
-    ret.store("outw", 0) if ret["outw"] == "nil"
-
+    ret.each {|key, value|
+      ret[key] = 0 if value == nil
+    }
     ret["inx"] = ret["inx"].abs
     ret["iny"] = ret["iny"].abs
     ret["inw"] = ret["inw"].abs
@@ -219,9 +174,7 @@ class Transform
     ret["outw"] = ret["outw"].truncate
     ret["outh"] = ret["outh"].truncate
 
-    ret.delete("inw_tmp") if ret.key?("inw_tmp")
-    ret.delete("posw") if ret.key?("posw")
-    ret.delete("posh") if ret.key?("posh")
+
     return ret
   end
 

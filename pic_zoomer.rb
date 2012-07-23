@@ -6,7 +6,7 @@ class Transform
   PRIORITY_LONG = 	1
   PRIORITY_SHORT = 	2
   HEIGHT_FULL = 	3
-  WIDTH_FULL = 		4
+  WIDTH_FULL = 	4
   WITHOUT_DEFORM =	5
   FILL =		6
   UP = 			10
@@ -149,14 +149,14 @@ class Transform
       #----------‰¡‚ğ100%g‚¤ic‚ª’·‚¯‚ê‚ÎØ‚èA’Z‚¯‚ê‚Î—]‚ç‚¹‚éj----------
       when WIDTH_FULL then
         ret["posw"] = NONE if ret["edge"] == YOKO
-        ret = width_full("deform" => ret["deform"], "inx" => ret["inx"], "iny" => ret["iny"], "inw" => ret["inw"], "inh" => ret["inh"], "outx" => ret["outx"], "outy" => ret["outx"], "outw" => ret["outw"], "outh" => ret["outh"])
+        ret = width_full("deform" => ret["deform"], "inx" => ret["inx"], "iny" => ret["iny"], "inw" => ret["inw"], "inh" => ret["inh"], "outx" => ret["outx"], "outy" => ret["outx"], "outw" => ret["outw"], "outh" => ret["outh"], "posh" => ret["posh"], "posw" => ret["posw"])
       #----------Šg‘å‚àk¬‚à‚µ‚È‚¢----------
       when WITHOUT_DEFORM then
       #p ret["deform"]
         ret = without_deform("deform" => ret["deform"], "inw" => ret["inw"] , "outw" => ret["outw"], "inx" => ret["inx"], "outx" => ret["outx"], "inh" => ret["inh"], "outh" => ret["outh"], "outy" => ret["outy"], "iny" => ret["iny"], "posh" => ret["posh"], "posw" => ret["posw"])
       #----------c‚à‰¡‚à‡‚í‚¹‚é----------
       when FILL then
-        ret = fill("deform" => ret["deform"], "inw" => ret["inw"], "inh" => ret["inh"], "outw" => ret["outw"], "outh" => ret["outh"])
+        ret = fill("deform" => ret["deform"], "inw" => ret["inw"], "inh" => ret["inh"], "outw" => ret["outw"], "outh" => ret["outh"], "posh" => ret["posh"], "posw" => ret["posw"])
     end
 
 
@@ -179,12 +179,13 @@ class Transform
     #----------cˆÊ’u‚Ìˆ—----------
     case ret["posh"]
       when UP then
-        ret["iny"] = 0
+        ret["iny"] = 0# if ret["deform"] == WIDTH_FULL
         ret["outy"] = 0 if ret["deform"] == WIDTH_FULL
       when MID_H then
         #ret["outy"] = (ret["outh"].to_f - ret["inh"].to_f ) / 2.0
-        ret["iny"] = (ret["inh"] - ret["outh"]) / 2.0#without_deform_middle
-        ret["outh"] += ret["inh"] - ret["outh"] #- (ret["inx"] + ret["outh"]) #without_deform_middle
+        ret["iny"] = (ret["inh"] - ret["outh"]) / 2.0 if ret["deform"] == WITHOUT_DEFORM#without_deform_middle
+        ret["outh"] += ret["inh"] - ret["outh"] if ret["deform"] == WITHOUT_DEFORM#- (ret["inx"] + ret["outh"]) #without_deform_middle
+        #ret["outy"] = 0 if ret["deform"] == WIDTH_FULL
       when LOW then
         #ret["outy"] = ret["inh"] - ret["outh"]
         #ret["outh"] += ret["inx"]

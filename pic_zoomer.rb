@@ -131,6 +131,7 @@ class Transform
   def width_full (ret)
     ret["outy"] = (ret["inh"] * ret["outw"] / ret["inw"]) / 2.0
     ret["outh"] = ret["outh"] - (ret["inh"] * ret["outw"] / ret["inw"])
+    p "outy: #{ret["outy"]}"
     return ret
   end
     #p ret["deform"]
@@ -194,7 +195,8 @@ class Transform
         #if ret["deform"] == WITHOUT_DEFORM then
           #p "inh: #{ret["inh"]}, outh: #{ret["outh"]}"
         #end
-        ret["outh"] += ret["inh"] - ret["outh"]
+        ret["outh"] += ret["inh"] - ret["outh"] unless ret["deform"] == WIDTH_FULL
+        ret["outy"] += ret["outy"] if ret["deform"] == WIDTH_FULL
       when NONE then
     end
      #p ret["deform"]

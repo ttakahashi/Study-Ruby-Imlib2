@@ -78,9 +78,6 @@ canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/test_without_deform_rightdown.png")
   
     assert_equal({"inx" => 565, "iny" => 27, "inw" => 1045, "inh" => 387, "outx" => 0, "outy" => 0, "outw" => 1045, "outh" => 387} , ret)
-  
-  
-  
   end
 
   def test_height_full_left
@@ -105,7 +102,15 @@ canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/test_without_deform_rightdown.pn
   
   def test_width_full_middle
     ret = @obj.calcsize("inw" => 1045, "inh" => 387, "outw" => 480, "outh" => 360, "deform" => Transform::WIDTH_FULL, "posw" => Transform::NONE, "posh" => Transform::MID_H)
-    assert_equal({"inx" => 0, "iny" => 13, "inw" => 1045, "inh" => 387, "outx" => 0, "outy" => 0, "outw" => 480, "outh" => 360}, ret)
+    #ret["outy"] = 83
+    #ret["outh"] = 184
+canvas = Imlib2::Image.new(480, 360)
+canvas.fill_rect [0, 0, 480, 360]
+image = Imlib2::Image.load('yokonaga.png')
+canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
+canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/test_width_full_middle.png")
+
+    assert_equal({"inx" => 0, "iny" => 0, "inw" => 1045, "inh" => 387, "outx" => 0, "outy" => 88, "outw" => 480, "outh" => 183}, ret)
   end
   
   def test_width_full_low

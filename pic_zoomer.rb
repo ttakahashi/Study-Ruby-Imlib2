@@ -127,6 +127,12 @@ class Transform
     ret["inw_tmp"] = 0 unless ret["inw_tmp"] = nil
     return ret
   end
+  
+  def width_full (ret)
+    ret["outy"] = (ret["inh"] * ret["outw"] / ret["inw"]) / 2.0
+    ret["outh"] = ret["outh"] - (ret["inh"] * ret["outw"] / ret["inw"])
+    return ret
+  end
     #p ret["deform"]
     #---------------ägëÂèàóù---------------
     case ret["deform"]
@@ -143,6 +149,7 @@ class Transform
       #----------â°Ç100%égÇ§ÅiècÇ™í∑ÇØÇÍÇŒêÿÇËÅAíZÇØÇÍÇŒó]ÇÁÇπÇÈÅj----------
       when WIDTH_FULL then
         ret["posw"] = NONE if ret["edge"] == YOKO
+        ret = width_full("deform" => ret["deform"], "inx" => ret["inx"], "iny" => ret["iny"], "inw" => ret["inw"], "inh" => ret["inh"], "outx" => ret["outx"], "outy" => ret["outx"], "outw" => ret["outw"], "outh" => ret["outh"])
       #----------ägëÂÇ‡èkè¨Ç‡ÇµÇ»Ç¢----------
       when WITHOUT_DEFORM then
       #p ret["deform"]
@@ -175,7 +182,7 @@ class Transform
         ret["iny"] = 0
       when MID_H then
         #ret["outy"] = (ret["outh"].to_f - ret["inh"].to_f ) / 2.0
-        ret["iny"] = (ret["inh"] - ret["outh"]) / 2.0 #without_deform_middle
+        ret["iny"] = (ret["inh"] - ret["outh"]) / 2.0#without_deform_middle
         ret["outh"] += ret["inh"] - ret["outh"] #- (ret["inx"] + ret["outh"]) #without_deform_middle
       when LOW then
         #ret["outy"] = ret["inh"] - ret["outh"]

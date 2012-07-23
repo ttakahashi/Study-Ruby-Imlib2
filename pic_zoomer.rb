@@ -180,6 +180,7 @@ class Transform
     case ret["posh"]
       when UP then
         ret["iny"] = 0
+        ret["outy"] = 0 if ret["deform"] == WIDTH_FULL
       when MID_H then
         #ret["outy"] = (ret["outh"].to_f - ret["inh"].to_f ) / 2.0
         ret["iny"] = (ret["inh"] - ret["outh"]) / 2.0#without_deform_middle

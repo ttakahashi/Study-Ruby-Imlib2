@@ -65,12 +65,27 @@ class Transform
 
   def without_deform (ret)
     if ret["inw"] > ret["outw"] then
-      ret["inx"] = (ret["inw"] - ret["outw"]) / 2.0
+#      if ret["posw"] == RIGHT then
+#        ret["inx"] = (ret["inw"] - ret["outw"])
+#      elsif ret["posw"] == MID_W then
+#        ret["inx"] = (ret["inw"] - ret["outw"]) / 2.0
+#      else
+#        ret["inx"] = 0
+#      end
+      ret["inw_tmp"] = ret["inw"] if ret["posw"] == RIGHT
+      p ret["inw_tmp"] if ret["posw"] == RIGHT
     else
       ret["outx"] = (ret["outw"] - ret["inw"]) / 2.0
     end
     if ret["inh"] > ret["outh"] then
-      ret["iny"] = (ret["inh"] - ret["outh"]) / 2.0
+ #     if ret["posh"] == LOW then
+ #       ret["iny"] = (ret["outw"] - ret["inh"])
+ #     elsif ret["posh"] == MID_H then
+ #       ret["iny"] = (ret["outw"] - ret["inh"]) / 2.0
+ #     else
+ #       ret["iny"] = 0
+ #     end
+       #ret["inw_tmp"] = ret["inw"] if ret["posw"] == RIGHT
     else
       ret["outy"] = (ret["outh"] - ret["inh"] ) / 2.0
     end
@@ -80,6 +95,9 @@ class Transform
     ret["iny"] = 0 if ret["iny"] == nil
     ret["outx"] = 0 if ret["outx"] == nil
     ret["outy"] = 0 if ret["outy"] == nil
+    
+    #ret["inx"] = 565
+    #ret["iny"] = 27
     return ret
   end
 
@@ -100,6 +118,15 @@ class Transform
       ret["edge"] = SQUARE
     end
     
+  def height_full (ret)
+    if ret["edge"] == YOKO then
+    elsif ret["edge"] == TATE then
+    end
+      
+    ret["inx"] = (ret["inw"] - ret["outw"]) / 2.0
+    
+    return ret
+  end
     
     #---------------Šg‘åˆ—---------------
     case ret["deform"]
@@ -112,15 +139,15 @@ class Transform
       #----------c‚ğ100%g‚¤i‰¡‚ª’·‚¯‚ê‚ÎØ‚èA’Z‚¯‚ê‚Î—]‚ç‚¹‚éj----------
       when HEIGHT_FULL then
         ret["posh"] = NONE if ret["edge"] == YOKO
+        ret = height_full("inx" => ret["inx"], "inw" => ret["inw"], "outw" => ret["outw"], "posw" => ret["posw"], "posh" => ret["posh"], "edge" => ret["edge"})
       #----------‰¡‚ğ100%g‚¤ic‚ª’·‚¯‚ê‚ÎØ‚èA’Z‚¯‚ê‚Î—]‚ç‚¹‚éj----------
       when WIDTH_FULL then
         ret["posw"] = NONE if ret["edge"] == YOKO
       #----------Šg‘å‚àk¬‚à‚µ‚È‚¢----------
       when WITHOUT_DEFORM then
-        ret = without_deform("inw" => ret["inw"] , "outw" => ret["outw"], "inx" => ret["inx"], "outx" => ret["outx"], "inh" => ret["inh"], "outh" => ret["outh"], "outy" => ret["outy"], "iny" => ret["iny"])
+        ret = without_deform("inw" => ret["inw"] , "outw" => ret["outw"], "inx" => ret["inx"], "outx" => ret["outx"], "inh" => ret["inh"], "outh" => ret["outh"], "outy" => ret["outy"], "iny" => ret["iny"], "posh" => ret["posh"], "posw" => ret["posw"])
       #----------c‚à‰¡‚à‡‚í‚¹‚é----------
       when FILL then
-
         ret = fill("inw" => ret["inw"], "inh" => ret["inh"], "outw" => ret["outw"], "outh" => ret["outh"])
     end
 
@@ -173,7 +200,6 @@ class Transform
     ret["outy"] = ret["outy"].truncate
     ret["outw"] = ret["outw"].truncate
     ret["outh"] = ret["outh"].truncate
-
 
     return ret
   end

@@ -64,7 +64,7 @@ class Transform
   end
 
   def without_deform (ret)
-    if ret["inw"] > ret["outw"] then
+    if ret["inw"] > ret["outw"] then #Œ³‰æ‘œ‚ª‘å‚«‚©‚Á‚½‚ç
 #      if ret["posw"] == RIGHT then
 #        ret["inx"] = (ret["inw"] - ret["outw"])
 #      elsif ret["posw"] == MID_W then
@@ -73,8 +73,8 @@ class Transform
 #        ret["inx"] = 0
 #      end
       ret["inw_tmp"] = ret["inw"] if ret["posw"] == RIGHT
-      p ret["inw_tmp"] if ret["posw"] == RIGHT
-    else
+      #p ret["inw_tmp"] if ret["posw"] == RIGHT
+    else #Œ³‰æ‘œ‚ª¬‚³‚©‚Á‚½‚ç
       ret["outx"] = (ret["outw"] - ret["inw"]) / 2.0
     end
     if ret["inh"] > ret["outh"] then
@@ -89,8 +89,8 @@ class Transform
     else
       ret["outy"] = (ret["outh"] - ret["inh"] ) / 2.0
     end
-    ret["outw"] = ret["inw"]
-    ret["outh"] = ret["inh"]
+    #ret["outw"] = ret["inw"]2
+    #ret["outh"] = ret["inh"]1
     ret["inx"] = 0 if ret["inx"] == nil
     ret["iny"] = 0 if ret["iny"] == nil
     ret["outx"] = 0 if ret["outx"] == nil
@@ -124,31 +124,32 @@ class Transform
     end
       
     ret["inx"] = (ret["inw"] - ret["outw"]) / 2.0
-    
+    ret["inw_tmp"] = 0 unless ret["inw_tmp"] = nil
     return ret
   end
-    
+    #p ret["deform"]
     #---------------Šg‘åˆ—---------------
     case ret["deform"]
       #----------’·‚¢•û—Dæi—]”’‚ğì‚éj----------
       when PRIORITY_LONG then
-        ret = priority_long("edge" => ret["edge"], "posw" => ret["posw"], "outh" => ret["outh"], "outw" => ret["outw"], "inw" => ret["inw"], "inh" => ret["inh"], "posh" => ret["posh"])
+        ret = priority_long("deform" => ret["deform"], "edge" => ret["edge"], "posw" => ret["posw"], "outh" => ret["outh"], "outw" => ret["outw"], "inw" => ret["inw"], "inh" => ret["inh"], "posh" => ret["posh"])
       #----------’Z‚¢•û—Dæi—]”’‚ğØ‚éj----------
       when PRIORITY_SHORT then
-        ret = priority_short("edge" => ret["edge"], "posh" => ret["posh"], "posw" => ret["posw"], "inx" => ret["inx"], "inw" => ret["inw"], "outw" => ret["outw"], "iny" => ret["iny"], "inh" => ret["inh"], "outh" => ret["outh"], "outx" => ret["outx"], "outy" => ret["outy"])
+        ret = priority_short("deform" => ret["deform"], "edge" => ret["edge"], "posh" => ret["posh"], "posw" => ret["posw"], "inx" => ret["inx"], "inw" => ret["inw"], "outw" => ret["outw"], "iny" => ret["iny"], "inh" => ret["inh"], "outh" => ret["outh"], "outx" => ret["outx"], "outy" => ret["outy"])
       #----------c‚ğ100%g‚¤i‰¡‚ª’·‚¯‚ê‚ÎØ‚èA’Z‚¯‚ê‚Î—]‚ç‚¹‚éj----------
       when HEIGHT_FULL then
         ret["posh"] = NONE if ret["edge"] == YOKO
-        ret = height_full("inx" => ret["inx"], "inw" => ret["inw"], "outw" => ret["outw"], "posw" => ret["posw"], "posh" => ret["posh"], "edge" => ret["edge"})
+        ret = height_full("deform" => ret["deform"], "inx" => ret["inx"], "inw" => ret["inw"], "outw" => ret["outw"], "posw" => ret["posw"], "posh" => ret["posh"], "edge" => ret["edge"])
       #----------‰¡‚ğ100%g‚¤ic‚ª’·‚¯‚ê‚ÎØ‚èA’Z‚¯‚ê‚Î—]‚ç‚¹‚éj----------
       when WIDTH_FULL then
         ret["posw"] = NONE if ret["edge"] == YOKO
       #----------Šg‘å‚àk¬‚à‚µ‚È‚¢----------
       when WITHOUT_DEFORM then
-        ret = without_deform("inw" => ret["inw"] , "outw" => ret["outw"], "inx" => ret["inx"], "outx" => ret["outx"], "inh" => ret["inh"], "outh" => ret["outh"], "outy" => ret["outy"], "iny" => ret["iny"], "posh" => ret["posh"], "posw" => ret["posw"])
+      #p ret["deform"]
+        ret = without_deform("deform" => ret["deform"], "inw" => ret["inw"] , "outw" => ret["outw"], "inx" => ret["inx"], "outx" => ret["outx"], "inh" => ret["inh"], "outh" => ret["outh"], "outy" => ret["outy"], "iny" => ret["iny"], "posh" => ret["posh"], "posw" => ret["posw"])
       #----------c‚à‰¡‚à‡‚í‚¹‚é----------
       when FILL then
-        ret = fill("inw" => ret["inw"], "inh" => ret["inh"], "outw" => ret["outw"], "outh" => ret["outh"])
+        ret = fill("deform" => ret["deform"], "inw" => ret["inw"], "inh" => ret["inh"], "outw" => ret["outw"], "outh" => ret["outh"])
     end
 
 
@@ -159,6 +160,10 @@ class Transform
       when MID_W then
       when RIGHT then
         ret["inx"] = ret["inw_tmp"].abs - ret["outw"] 
+        p 
+        #if ret["deform"] == WITHOUT_DEFORM then
+          #p "inw_tmp: #{ret["inw_tmp"]}, outw: #{ret["outw"]}"
+        #end
       when NONE then
     end
 
@@ -169,9 +174,17 @@ class Transform
       when MID_H then
         ret["outy"] = (ret["outh"].to_f - ret["inh"].to_f ) / 2.0
       when LOW then
-        ret["outy"] = ret["inh"] - ret["outh"]
+        #ret["outy"] = ret["inh"] - ret["outh"]
+        ret["outw"] += ret["inx"]
+        ret["iny"] = ret["inh"] - ret["outh"] if ret["deform"] == WITHOUT_DEFORM
+        #if ret["deform"] == WITHOUT_DEFORM then
+          #p "inh: #{ret["inh"]}, outh: #{ret["outh"]}"
+        #end
+        ret["outh"] += ret["inh"] - ret["outh"]
       when NONE then
     end
+     #p ret["deform"]
+     #p WITHOUT_DEFORM
       
    #---------â‘Î’l•®”‚É•ÏŠ·----------
     ret.delete("edge") if ret.has_key?("edge")
@@ -183,23 +196,23 @@ class Transform
     ret.each {|key, value|
       ret[key] = 0 if value == nil
     }
-    ret["inx"] = ret["inx"].abs
-    ret["iny"] = ret["iny"].abs
-    ret["inw"] = ret["inw"].abs
-    ret["inh"] = ret["inh"].abs
-    ret["outx"] = ret["outx"].abs
-    ret["outy"] = ret["outy"].abs
-    ret["outw"] = ret["outw"].abs
-    ret["outh"] = ret["outh"].abs
+    ret["inx"] = ret["inx"].abs unless ret["inx"] == nil
+    ret["iny"] = ret["iny"].abs unless ret["iny"] == nil
+    ret["inw"] = ret["inw"].abs unless ret["inw"] == nil
+    ret["inh"] = ret["inh"].abs unless ret["inh"] == nil
+    ret["outx"] = ret["outx"].abs unless ret["outx"] == nil
+    ret["outy"] = ret["outy"].abs unless ret["outy"] == nil
+    ret["outw"] = ret["outw"].abs unless ret["outw"] == nil
+    ret["outh"] = ret["outh"].abs unless ret["outh"] == nil
 
-    ret["inx"] = ret["inx"].truncate
-    ret["iny"] = ret["iny"].truncate
-    ret["inw"] = ret["inw"].truncate
-    ret["inh"] = ret["inh"].truncate
-    ret["outx"] = ret["outx"].truncate
-    ret["outy"] = ret["outy"].truncate
-    ret["outw"] = ret["outw"].truncate
-    ret["outh"] = ret["outh"].truncate
+    ret["inx"] = ret["inx"].truncate unless ret["inx"] == nil
+    ret["iny"] = ret["iny"].truncate unless ret["iny"] == nil
+    ret["inw"] = ret["inw"].truncate unless ret["inw"] == nil
+    ret["inh"] = ret["inh"].truncate unless ret["inh"] == nil
+    ret["outx"] = ret["outx"].truncate unless ret["outx"] == nil
+    ret["outy"] = ret["outy"].truncate unless ret["outy"] == nil
+    ret["outw"] = ret["outw"].truncate unless ret["outw"] == nil
+    ret["outh"] = ret["outh"].truncate unless ret["outh"] == nil
 
     return ret
   end

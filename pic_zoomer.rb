@@ -158,9 +158,11 @@ class Transform
       when LEFT then
         ret["inx"] = 0
       when MID_W then
+        ret["inx"] = (ret["inw"] - ret["outw"]) / 2 #without_deform_middle
+        ret["outw"] = ret["inw"] if ret["deform"] == WITHOUT_DEFORM
       when RIGHT then
         ret["inx"] = ret["inw_tmp"].abs - ret["outw"] 
-        p 
+        ret["outw"] = ret["inw"]
         #if ret["deform"] == WITHOUT_DEFORM then
           #p "inw_tmp: #{ret["inw_tmp"]}, outw: #{ret["outw"]}"
         #end
@@ -172,11 +174,14 @@ class Transform
       when UP then
         ret["iny"] = 0
       when MID_H then
-        ret["outy"] = (ret["outh"].to_f - ret["inh"].to_f ) / 2.0
+        #ret["outy"] = (ret["outh"].to_f - ret["inh"].to_f ) / 2.0
+        ret["iny"] = (ret["inh"] - ret["outh"]) / 2.0 #without_deform_middle
+        ret["outh"] += ret["inh"] - ret["outh"] #- (ret["inx"] + ret["outh"]) #without_deform_middle
       when LOW then
         #ret["outy"] = ret["inh"] - ret["outh"]
-        ret["outw"] += ret["inx"]
+        #ret["outh"] += ret["inx"]
         ret["iny"] = ret["inh"] - ret["outh"] if ret["deform"] == WITHOUT_DEFORM
+        #p ret["iny"] if ret["deform"] == WITHOUT_DEFORM
         #if ret["deform"] == WITHOUT_DEFORM then
           #p "inh: #{ret["inh"]}, outh: #{ret["outh"]}"
         #end

@@ -107,6 +107,24 @@ class Transform
     return ret
   end
 
+  def height_full (ret)
+    if ret["edge"] == YOKO then
+      ret["inw_tmp"] = ret["inw"]
+      ret["inw"] = ret["inh"].to_f / ret["outh"] * ret["outw"]
+    elsif ret["edge"] == TATE then
+      ret["inw_tmp"] = ret["inw"]
+      ret["inw"] = ret["inh"] / ret["outh"] * ret["outw"]
+    end
+    #ret["inx"] = (ret["inw"] - ret["outw"]) / 2.0
+    return ret
+  end
+  
+  def width_full (ret)
+    ret["outy"] = (ret["inh"] * ret["outw"] / ret["inw"]) / 2.0
+    ret["outh"] = ret["outh"] - (ret["inh"] * ret["outw"] / ret["inw"])
+    return ret
+  end
+
   def calcsize (ret)
     ret.default = 0
     #---------------縦長か横長か正方形か調べる---------------
@@ -119,22 +137,7 @@ class Transform
       ret["edge"] = SQUARE
     end
     
-  def height_full (ret)
-    if ret["edge"] == YOKO then
-    elsif ret["edge"] == TATE then
-    end
-      
-    ret["inx"] = (ret["inw"] - ret["outw"]) / 2.0
-    ret["inw_tmp"] = 0 unless ret["inw_tmp"] = nil
-    return ret
-  end
-  
-  def width_full (ret)
-    ret["outy"] = (ret["inh"] * ret["outw"] / ret["inw"]) / 2.0
-    ret["outh"] = ret["outh"] - (ret["inh"] * ret["outw"] / ret["inw"])
-    return ret
-  end
-    #p ret["deform"]
+
     #---------------拡大処理---------------
     case ret["deform"]
       #----------長い方優先（余白を作る）----------
@@ -146,7 +149,7 @@ class Transform
       #----------縦を100%使う（横が長ければ切り、短ければ余らせる）----------
       when HEIGHT_FULL then
         ret["posh"] = NONE if ret["edge"] == YOKO
-        ret = height_full("deform" => ret["deform"], "inx" => ret["inx"], "inw" => ret["inw"], "outw" => ret["outw"], "posw" => ret["posw"], "posh" => ret["posh"], "edge" => ret["edge"])
+        ret = height_full("deform" => ret["deform"], "inx" => ret["inx"], "iny" => ret["iny"], "inw" => ret["inw"], "inh" => ret["inh"], "outx" => ret["outx"], "outy" => ret["outy"], "outw" => ret["outw"], "outh" => ret["outh"], "posw" => ret["posw"], "posh" => ret["posh"], "edge" => ret["edge"])
       #----------横を100%使う（縦が長ければ切り、短ければ余らせる）----------
       when WIDTH_FULL then
         ret["posw"] = NONE if ret["edge"] == YOKO
@@ -166,11 +169,12 @@ class Transform
       when LEFT then
         ret["inx"] = 0
       when MID_W then
-        ret["inx"] = (ret["inw"] - ret["outw"]) / 2 #without_deform_middle
+        ret["inx"] = (ret["inw"] - ret["outw"]) / 2 unless ret["deform"] == HEIGHT_FULL#without_deform_middle
         ret["outw"] = ret["inw"] if ret["deform"] == WITHOUT_DEFORM
       when RIGHT then
-        ret["inx"] = ret["inw_tmp"].abs - ret["outw"] 
-        ret["outw"] = ret["inw"]
+         ret["inx"] = ret["inw_tmp"].abs - ret["outw"]  unless ret["deform"] == HEIGHT_FULL
+        ret["inx"] = ret["inw_tmp"] - ret["outw"] if ret["deform"] == HEIGHT_FULL
+        ret["outw"] = ret["inw"] unless ret["deform"] == HEIGHT_FULL
       when NONE then
     end
 
@@ -180,7 +184,6 @@ class Transform
         ret["iny"] = 0# if ret["deform"] == WIDTH_FULL
         ret["outy"] = 0 if ret["deform"] == WIDTH_FULL
       when MID_H then
-        #p "#{ret["outh_tmp"]} - (#{ret["outw"]} / #{ret["inw"]} * #{ret["inh"]}) / 2.0" if ret["deform"] == PRIORITY_LONG
         ret["outy"] = (ret["outh_tmp"].to_f - (ret["outw"].to_f / ret["inw"].to_f * ret["inh"].to_f)) / 2.0 if ret["deform"] == PRIORITY_LONG
         ret["iny"] = (ret["inh"] - ret["outh"]) / 2.0 if ret["deform"] == WITHOUT_DEFORM#without_deform_middle
         ret["outh"] += ret["inh"] - ret["outh"] if ret["deform"] == WITHOUT_DEFORM#- (ret["inx"] + ret["outh"]) #without_deform_middle
@@ -190,8 +193,6 @@ class Transform
         ret["iny"] = ret["inh"] - ret["outh"] if ret["deform"] == WITHOUT_DEFORM
         ret["outh"] += ret["inh"] - ret["outh"] unless ret["deform"] == WIDTH_FULL
         #ret["outh"] += ret["outy"] if ret["deform"] == PRIORITY_LONG
-        #p "#{ret["outh"]}, #{ret["inh"]}, #{ret["outw"]}, #{ret["inw"]}" if ret["deform"] == PRIORITY_LONG
-        #p ret["outh_tmp"]
         ret["outy"] = ret["outh_tmp"] - (ret["inh"] * ret["outw"] / ret["inw"] ) if ret["deform"] == PRIORITY_LONG
         ret["outh"] = ret["inh"] * ret["outw"] / ret["inw"] if ret["deform"] == PRIORITY_LONG
         ret["outy"] += ret["outy"] if ret["deform"] == WIDTH_FULL

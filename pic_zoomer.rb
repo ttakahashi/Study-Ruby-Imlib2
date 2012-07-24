@@ -180,7 +180,8 @@ class Transform
         ret["iny"] = 0# if ret["deform"] == WIDTH_FULL
         ret["outy"] = 0 if ret["deform"] == WIDTH_FULL
       when MID_H then
-        #ret["outy"] = (ret["outh"].to_f - ret["inh"].to_f ) / 2.0
+        #p "#{ret["outh_tmp"]} - (#{ret["outw"]} / #{ret["inw"]} * #{ret["inh"]}) / 2.0" if ret["deform"] == PRIORITY_LONG
+        ret["outy"] = (ret["outh_tmp"].to_f - (ret["outw"].to_f / ret["inw"].to_f * ret["inh"].to_f)) / 2.0 if ret["deform"] == PRIORITY_LONG
         ret["iny"] = (ret["inh"] - ret["outh"]) / 2.0 if ret["deform"] == WITHOUT_DEFORM#without_deform_middle
         ret["outh"] += ret["inh"] - ret["outh"] if ret["deform"] == WITHOUT_DEFORM#- (ret["inx"] + ret["outh"]) #without_deform_middle
       when LOW then
@@ -189,8 +190,8 @@ class Transform
         ret["iny"] = ret["inh"] - ret["outh"] if ret["deform"] == WITHOUT_DEFORM
         ret["outh"] += ret["inh"] - ret["outh"] unless ret["deform"] == WIDTH_FULL
         #ret["outh"] += ret["outy"] if ret["deform"] == PRIORITY_LONG
-        p "#{ret["outh"]}, #{ret["inh"]}, #{ret["outw"]}, #{ret["inw"]}" if ret["deform"] == PRIORITY_LONG
-        p ret["outh_tmp"]
+        #p "#{ret["outh"]}, #{ret["inh"]}, #{ret["outw"]}, #{ret["inw"]}" if ret["deform"] == PRIORITY_LONG
+        #p ret["outh_tmp"]
         ret["outy"] = ret["outh_tmp"] - (ret["inh"] * ret["outw"] / ret["inw"] ) if ret["deform"] == PRIORITY_LONG
         ret["outh"] = ret["inh"] * ret["outw"] / ret["inw"] if ret["deform"] == PRIORITY_LONG
         ret["outy"] += ret["outy"] if ret["deform"] == WIDTH_FULL

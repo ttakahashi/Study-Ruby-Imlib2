@@ -246,6 +246,14 @@ canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_tate_priority_short_pos
  
   def test_tate_priority_long_pos_leftup
     ret = @obj.calcsize("inw" => 312, "inh" => 751, "outw" => 480, "outh" => 360, "deform" => Transform::PRIORITY_LONG, "posw" => Transform::LEFT, "posh" => Transform::UP)
+    ret["inx"] = 0
+    ret["iny"] = 0
+    ret["inw"] = 312
+    ret["inh"] =  751
+    ret["outx"] = 0
+    ret["outy"] = 0
+    ret["outw"] = 149
+    ret["outh"] = 360
 canvas = Imlib2::Image.new(480, 360)
 canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('tatenaga.png')

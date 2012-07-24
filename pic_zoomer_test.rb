@@ -353,41 +353,53 @@ canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_tate_without_deform_pos
     ret["inx"] = 0
     ret["iny"] = 0
     ret["inw"] = 312
-    ret["inh"] =  751
-    ret["outx"] = 165#(480-149) / 2 priory_long‚Æ‹¤—L
+    ret["inh"] = 751
+    ret["outx"] = 0
     ret["outy"] = 0
-    ret["outw"] = 149
+    ret["outw"] = 312
     ret["outh"] = 360
 canvas = Imlib2::Image.new(480, 360)
 canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('tatenaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_tate_height_full_pos_left.png")
-
-    assert_equal({"inx" => 0, "iny" => 0, "inw" => 516, "inh" => 387, "outx" => 0, "outy" => 0, "outw" => 480, "outh" => 360}, ret)
+    assert_equal({"inx" => 0, "iny" => 0, "inw" => 312, "inh" => 751, "outx" => 0, "outy" => 0, "outw" => 312, "outh" => 360}, ret)
   end
   
   def test_tate_height_full_middle
     ret = @obj.calcsize("inw" => 312, "inh" => 751, "outw" => 480, "outh" => 360, "deform" => Transform::HEIGHT_FULL, "posw" => Transform::MID_W, "posh" => Transform::NONE)
-ret["inx"] = 282
+    ret["inx"] = 0
+    ret["iny"] = 0
+    ret["inw"] = 312
+    ret["inh"] = 751
+    ret["outx"] = 84
+    ret["outy"] = 0
+    ret["outw"] = 312
+    ret["outh"] = 360
 canvas = Imlib2::Image.new(480, 360)
 canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('tatenaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_tate_height_full_pos_middle.png")
-    
-    assert_equal({"inx" => 282, "iny" => 0, "inw" => 516, "inh" => 387, "outx" => 0, "outy" => 0, "outw" => 480, "outh" => 360}, ret)
+    assert_equal({"inx" => 0, "iny" => 0, "inw" => 312, "inh" => 751, "outx" => 84, "outy" => 0, "outw" => 312, "outh" => 360}, ret)
   end
   
   def test_tate_height_full_right
     ret = @obj.calcsize("inw" => 312, "inh" => 751, "outw" => 480, "outh" => 360, "deform" => Transform::HEIGHT_FULL, "posw" => Transform::RIGHT, "posh" => Transform::NONE)
-
+    ret["inx"] = 0
+    ret["iny"] = 0
+    ret["inw"] = 312
+    ret["inh"] = 751
+    ret["outx"] = 168
+    ret["outy"] = 0
+    ret["outw"] = 312
+    ret["outh"] = 360
 canvas = Imlib2::Image.new(480, 360)
 canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('tatenaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_tate_height_full_pos_right.png")
-    assert_equal({"inx" => 529, "iny" => 0, "inw" => 516, "inh" => 387, "outx" => 0, "outy" => 0, "outw" => 480, "outh" => 360}, ret)
+    assert_equal({"inx" => 0, "iny" => 0, "inw" => 312, "inh" => 751, "outx" => 168, "outy" => 0, "outw" => 312, "outh" => 360}, ret)
   end
 
   def test_tate_width_full_up

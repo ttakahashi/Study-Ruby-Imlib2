@@ -168,6 +168,7 @@ class Transform
     case ret["posw"]
       when LEFT then
         ret["inx"] = 0
+        ret["outw"] = ret["inw"] if ret["deform"] == WITHOUT_DEFORM
       when MID_W then
         ret["inx"] = (ret["inw"] - ret["outw"]) / 2 unless ret["deform"] == HEIGHT_FULL#without_deform_middle
         ret["outw"] = ret["inw"] if ret["deform"] == WITHOUT_DEFORM
@@ -183,6 +184,7 @@ class Transform
       when UP then
         ret["iny"] = 0# if ret["deform"] == WIDTH_FULL
         ret["outy"] = 0 if ret["deform"] == WIDTH_FULL
+        ret["outh"] = ret["inh"] if ret["deform"] == WITHOUT_DEFORM
       when MID_H then
         ret["outy"] = (ret["outh_tmp"].to_f - (ret["outw"].to_f / ret["inw"].to_f * ret["inh"].to_f)) / 2.0 if ret["deform"] == PRIORITY_LONG
         ret["iny"] = (ret["inh"] - ret["outh"]) / 2.0 if ret["deform"] == WITHOUT_DEFORM#without_deform_middle

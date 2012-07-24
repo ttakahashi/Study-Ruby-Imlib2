@@ -93,7 +93,7 @@ image = Imlib2::Image.load('yokonaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/test_without_deform_pos_leftup.png")
 
-    assert_equal({"inx" => 0, "iny" => 0, "inw" => 1045, "inh" => 387, "outx" => 0, "outy" => 0, "outw" => 480, "outh" => 360} , ret)
+    assert_equal({"inx" => 0, "iny" => 0, "inw" => 1045, "inh" => 387, "outx" => 0, "outy" => 0, "outw" => 1045, "outh" => 387} , ret)
   end
  
   def test_without_deform_middle

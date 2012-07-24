@@ -98,7 +98,7 @@ class Transform
     ret["iny"] = 0 if ret["iny"] == nil
     ret["outx"] = 0 if ret["outx"] == nil
     ret["outy"] = 0 if ret["outy"] == nil
-    
+    ret["inw_tmp"] = 0 if ret["inw_tmp"] == nil
     #ret["inx"] = 565
     #ret["iny"] = 27
     return ret

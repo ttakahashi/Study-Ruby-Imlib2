@@ -17,7 +17,6 @@ canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('yokonaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_yoko_priority_short_pos_leftup.png")
-
     assert_equal({"inx" => 0, "iny" => 0, "inw" => 480, "inh" => 387, "outx" => 0, "outy" => 0, "outw" => 480, "outh" => 360}, ret)
   end
   
@@ -28,7 +27,6 @@ canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('yokonaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_yoko_priority_short_pos_middle.png")
-
     assert_equal({"inx" => 282, "iny" => 0, "inw" => 480, "inh" => 387, "outx" => 0, "outy" => 0, "outw" => 480, "outh" => 360}, ret)
   end
   
@@ -39,7 +37,6 @@ canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('yokonaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_yoko_priority_short_pos_rightdown.png")
-
     assert_equal({"inx" => 565, "iny" => 0, "inw" => 480, "inh" => 387, "outx" => 0, "outy" => 0, "outw" => 480, "outh" => 360}, ret)
   end
  
@@ -50,7 +47,6 @@ canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('yokonaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_yoko_priority_long_pos_leftup.png")
-
     assert_equal({"inx" => 0, "iny" => 0, "inw" => 1045, "inh" => 387, "outx" => 0, "outy" => 0, "outw" => 480, "outh" => 177}, ret)
   end
   
@@ -81,7 +77,6 @@ canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('yokonaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_yoko_fill.png")
-
     assert_equal({"inx" => 0, "iny" => 0, "inw" => 1045, "inh" => 387, "outx" => 0, "outy" => 0, "outw" => 480, "outh" => 360} , ret)
   end
 
@@ -92,7 +87,6 @@ canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('yokonaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_yoko_without_deform_pos_leftup.png")
-
     assert_equal({"inx" => 0, "iny" => 0, "inw" => 1045, "inh" => 387, "outx" => 0, "outy" => 0, "outw" => 1045, "outh" => 387} , ret)
   end
  
@@ -104,7 +98,6 @@ canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('yokonaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_yoko_without_deform_pos_middle.png")
-    
     assert_equal({"inx" => 282, "iny" => 13, "inw" => 1045, "inh" => 387, "outx" => 0, "outy" => 0, "outw" => 1045, "outh" => 387} , ret)
   end
   
@@ -116,7 +109,6 @@ canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('yokonaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_yoko_without_deform_pos_rightdown.png")
-  
     assert_equal({"inx" => 565, "iny" => 27, "inw" => 1045, "inh" => 387, "outx" => 0, "outy" => 0, "outw" => 1045, "outh" => 387} , ret)
   end
 
@@ -128,7 +120,6 @@ canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('yokonaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_yoko_height_full_pos_left.png")
-
     assert_equal({"inx" => 0, "iny" => 0, "inw" => 516, "inh" => 387, "outx" => 0, "outy" => 0, "outw" => 480, "outh" => 360}, ret)
   end
   
@@ -140,7 +131,7 @@ canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('yokonaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_yoko_height_full_pos_middle.png")
-    
+   
     assert_equal({"inx" => 282, "iny" => 0, "inw" => 516, "inh" => 387, "outx" => 0, "outy" => 0, "outw" => 480, "outh" => 360}, ret)
   end
   
@@ -163,7 +154,6 @@ canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('yokonaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_yoko_width_full_pos_up.png")
-
     assert_equal({"inx" => 0, "iny" => 0, "inw" => 1045, "inh" => 387, "outx" => 0, "outy" => 0, "outw" => 480, "outh" => 183}, ret)
   end
   
@@ -175,7 +165,6 @@ canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('yokonaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_yoko_width_full_pos_middle.png")
-
     assert_equal({"inx" => 0, "iny" => 0, "inw" => 1045, "inh" => 387, "outx" => 0, "outy" => 88, "outw" => 480, "outh" => 183}, ret)
   end
   
@@ -187,7 +176,6 @@ canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('yokonaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_yoko_width_full_pos_low.png")
-
     assert_equal({"inx" => 0, "iny" => 0, "inw" => 1045, "inh" => 387, "outx" => 0, "outy" => 177, "outw" => 480, "outh" => 183}, ret)
   end
   
@@ -222,7 +210,6 @@ canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('tatenaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_tate_priority_short_pos_middle.png")
-
     assert_equal({"inx" => 0, "iny" => 258, "inw" => 312, "inh" => 234, "outx" => 0, "outy" => 0, "outw" => 480, "outh" => 360}, ret)
   end
   
@@ -240,7 +227,6 @@ canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('tatenaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_tate_priority_short_pos_rightdown.png")
-
     assert_equal({"inx" => 0, "iny" => 517, "inw" => 312, "inh" => 234, "outx" => 0, "outy" => 0, "outw" => 480, "outh" => 360}, ret)
   end
  
@@ -259,7 +245,6 @@ canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('tatenaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_tate_priority_long_pos_leftup.png")
-
     assert_equal({"inx" => 0, "iny" => 0, "inw" => 312, "inh" => 751, "outx" => 0, "outy" => 0, "outw" => 149, "outh" => 360}, ret)
   end
   
@@ -306,43 +291,62 @@ canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('tatenaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_tate_fill.png")
-
     assert_equal({"inx" => 0, "iny" => 0, "inw" => 312, "inh" => 751, "outx" => 0, "outy" => 0, "outw" => 480, "outh" => 360} , ret)
   end
 
   def test_tate_without_deform_leftup
     ret = @obj.calcsize("inw" => 312, "inh" => 751, "outw" => 480, "outh" => 360, "deform" => Transform::WITHOUT_DEFORM, "posw" => Transform::LEFT, "posh" => Transform::UP)
+    ret["inx"] = 0
+    ret["iny"] = 0
+    ret["inw"] = 312
+    ret["inh"] = 360
+    ret["outx"] = 0
+    ret["outy"] = 0
+    ret["outw"] = 312
+    ret["outh"] = 360
 canvas = Imlib2::Image.new(480, 360)
 canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('tatenaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_tate_without_deform_pos_leftup.png")
-
-    assert_equal({"inx" => 0, "iny" => 0, "inw" => 1045, "inh" => 387, "outx" => 0, "outy" => 0, "outw" => 1045, "outh" => 387} , ret)
+    assert_equal({"inx" => 0, "iny" => 0, "inw" => 312, "inh" => 360, "outx" => 0, "outy" => 0, "outw" => 312, "outh" => 360} , ret)
   end
  
   def test_tate_without_deform_middle
     ret = @obj.calcsize("inw" => 312, "inh" => 751, "outw" => 480, "outh" => 360, "deform" => Transform::WITHOUT_DEFORM, "posw" => Transform::MID_W, "posh" => Transform::MID_H)
-
+    ret["inx"] = 0
+    ret["iny"] = 195
+    ret["inw"] = 312
+    ret["inh"] = 360
+    ret["outx"] = 84
+    ret["outy"] = 0
+    ret["outw"] = 312
+    ret["outh"] = 360
 canvas = Imlib2::Image.new(480, 360)
 canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('tatenaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_tate_without_deform_pos_middle.png")
-    
-    assert_equal({"inx" => 282, "iny" => 13, "inw" => 1045, "inh" => 387, "outx" => 0, "outy" => 0, "outw" => 1045, "outh" => 387} , ret)
+    assert_equal({"inx" => 0, "iny" => 195, "inw" => 312, "inh" => 360, "outx" => 84, "outy" => 0, "outw" => 312, "outh" => 360} , ret)
   end
   
   def test_tate_without_deform_rightdown
     ret = @obj.calcsize("inw" => 312, "inh" => 751, "outw" => 480, "outh" => 360, "deform" => Transform::WITHOUT_DEFORM, "posw" => Transform::RIGHT, "posh" => Transform::LOW)
-
+    ret["inx"] = 0
+    ret["iny"] = 391
+    ret["inw"] = 312
+    ret["inh"] = 360
+    ret["outx"] = 168
+    ret["outy"] = 0
+    ret["outw"] = 312
+    ret["outh"] = 360
 canvas = Imlib2::Image.new(480, 360)
 canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('tatenaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_tate_without_deform_pos_rightdown.png")
   
-    assert_equal({"inx" => 565, "iny" => 27, "inw" => 1045, "inh" => 387, "outx" => 0, "outy" => 0, "outw" => 1045, "outh" => 387} , ret)
+    assert_equal({"inx" => 0, "iny" => 391, "inw" => 312, "inh" => 360, "outx" => 168, "outy" => 0, "outw" => 312, "outh" => 360} , ret)
   end
 
   def test_tate_height_full_left

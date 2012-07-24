@@ -32,6 +32,8 @@ class Transform
       ret["outw"] = ret["outh"].to_f / ret["inh"].to_f * ret["inw"].to_f
     end
     ret["inx"] = ret["iny"] = ret["outx"] = ret["outy"] = 0
+    ret["inw_tmp"] = 0 if ret["inw_tmp"] == nil
+    ret["outh_tmp"] = 0 if ret["outh_tmp"] == nil
     return ret
   end
 

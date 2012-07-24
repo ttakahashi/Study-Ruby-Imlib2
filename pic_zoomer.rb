@@ -173,7 +173,7 @@ class Transform
         ret["outw"] = ret["inw"] if ret["deform"] == WITHOUT_DEFORM
       when RIGHT then
          ret["inx"] = ret["inw_tmp"].abs - ret["outw"]  unless ret["deform"] == HEIGHT_FULL
-        ret["inx"] = ret["inw_tmp"] - ret["outw"] if ret["deform"] == HEIGHT_FULL
+        ret["inx"] = ret["inw_tmp"] - ret["inw"] if ret["deform"] == HEIGHT_FULL
         ret["outw"] = ret["inw"] unless ret["deform"] == HEIGHT_FULL
       when NONE then
     end

@@ -44,7 +44,7 @@ class Transform
       ret["posw"] = NONE if ret["posw"] == MID_W
     else
       ret["posw"] = NONE
-      ret["posh"] = NONE if ret["posh"] == MID_H
+      #ret["posh"] = NONE if ret["posh"] == MID_H
     end
     #-----ägëÂèàóù-----
     if ret["edge"] ==YOKO then
@@ -55,11 +55,13 @@ class Transform
     elsif ret["edge"] == TATE then
       ret["inx"] = 0
       ret["iny"] = (ret["inh"].to_f - ret["outh"].to_f) / 2.0
+      ret["inh_tmp"] = ret["inh"]
       ret["inh"] = ret["outh"]
     else
       ret["inx"] = 0
       ret["inw"] = ret["outw"]
       ret["iny"] = (ret["inh"].to_f - ret["outh"].to_f) / 2.0
+      ret["inh_tmp"] = ret["inh"]
       ret["inh"] = ret["outh"]
     end
       ret["outx"] = ret["outy"] = 0
@@ -201,6 +203,7 @@ class Transform
             ret["outh"] = ret["outh_tmp"]
           end
         end
+        ret["inh"] = ret["inw"].to_f / ret["outw"] * ret["outh"] if ret["deform"] == PRIORITY_SHORT
       when MID_H then
         ret["outy"] = (ret["outh_tmp"].to_f - (ret["outw"].to_f / ret["inw"].to_f * ret["inh"].to_f)) / 2.0 if ret["deform"] == PRIORITY_LONG
         ret["iny"] = (ret["inh"] - ret["outh"]) / 2.0 if ret["deform"] == WITHOUT_DEFORM#without_deform_middle
@@ -214,6 +217,8 @@ class Transform
             ret["iny"] = (ret["inh_tmp"] - ret["inh"]) / 2.0
           end
       end
+       ret["inh"] =(  ret["inw"].to_f  /    ret["outw"]  *    ret["outh"])  if ret["deform"] == PRIORITY_SHORT
+       ret["iny"] = ( ret["inh_tmp"] - ret["inh"] ) / 2.0 if ret["deform"]  == PRIORITY_SHORT
       when LOW then
         #ret["outy"] = ret["inh"] - ret["outh"]
         #ret["outh"] += ret["inx"]
@@ -232,6 +237,8 @@ class Transform
             ret["iny"] = (ret["inh_tmp"] - ret["inh"])
           end
         end
+       ret["inh"] =(  ret["inw"].to_f  /    ret["outw"]  *    ret["outh"])  if ret["deform"] == PRIORITY_SHORT
+       ret["iny"] = ret["inh_tmp"] - ret["inh"] if ret["deform"]  == PRIORITY_SHORT
       when NONE then
     end
       

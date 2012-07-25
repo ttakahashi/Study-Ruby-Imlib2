@@ -193,6 +193,7 @@ class Transform
         ret["inx"] = 0 if ret["deform"] == PRIORITY_LONG
         ret["outw"] = ret["outh"].to_f / ret["inh"] * ret["inw"] if ret["deform"] == PRIORITY_LONG
         ret["outx"] = ret["outw_tmp"] - ret["outw"] if ret["deform"] == PRIORITY_LONG
+        #ret["outw"] = ret["inw_tmp"] if ret["deform"] = HEIGHT_FULL && ret["edge"] == TATE
       when NONE then
     end
 

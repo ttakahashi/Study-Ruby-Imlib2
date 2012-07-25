@@ -281,7 +281,7 @@ canvas.fill_rect [0, 0, 480, 360]
 image = Imlib2::Image.load('tatenaga.png')
 canvas.blend_image!(image, ret["inx"], ret["iny"], ret["inw"], ret["inh"], ret["outx"], ret["outy"], ret["outw"], ret["outh"])
 canvas.save("/home/ttakahashi/Study-Ruby-Imlib2/pic/test_tate_priority_long_pos_rightdown.png")
-    assert_equal({"inx" => 0, "iny" => 0, "inw" => 312, "inh" => 751, "outx" => 331, "outy" => 0, "outw" => 149, "outh" => 360}, ret)
+    assert_equal({"inx" => 0, "iny" => 0, "inw" => 312, "inh" => 751, "outx" => 330, "outy" => 0, "outw" => 149, "outh" => 360}, ret)
   end
   
   def test_tate_fill

@@ -99,6 +99,7 @@ class Transform
     ret["outx"] = 0 if ret["outx"] == nil
     ret["outy"] = 0 if ret["outy"] == nil
     ret["inw_tmp"] = 0 if ret["inw_tmp"] == nil
+    ret["outw_tmp"] = ret["outw"] if ret["edge"] == TATE
     #ret["inx"] = 565
     #ret["iny"] = 27
     return ret
@@ -159,7 +160,7 @@ class Transform
       #----------ägëÂÇ‡èkè¨Ç‡ÇµÇ»Ç¢----------
       when WITHOUT_DEFORM then
       #p ret["deform"]
-        ret = without_deform("deform" => ret["deform"], "inw" => ret["inw"] , "outw" => ret["outw"], "inx" => ret["inx"], "outx" => ret["outx"], "inh" => ret["inh"], "outh" => ret["outh"], "outy" => ret["outy"], "iny" => ret["iny"], "posh" => ret["posh"], "posw" => ret["posw"])
+        ret = without_deform("deform" => ret["deform"], "inw" => ret["inw"] , "outw" => ret["outw"], "inx" => ret["inx"], "outx" => ret["outx"], "inh" => ret["inh"], "outh" => ret["outh"], "outy" => ret["outy"], "iny" => ret["iny"], "posh" => ret["posh"], "posw" => ret["posw"], "edge" => ret["edge"])
       #----------ècÇ‡â°Ç‡çáÇÌÇπÇÈ----------
       when FILL then
         ret = fill("deform" => ret["deform"], "inw" => ret["inw"], "inh" => ret["inh"], "outw" => ret["outw"], "outh" => ret["outh"], "posh" => ret["posh"], "posw" => ret["posw"])
@@ -171,14 +172,19 @@ class Transform
       when LEFT then
         ret["inx"] = 0
         ret["outw"] = ret["inw"] if ret["deform"] == WITHOUT_DEFORM
+        ret["outx"] = 0 if ret["deform"] == WITHOUT_DEFORM
       when MID_W then
         ret["inx"] = (ret["inw"] - ret["outw"]) / 2 unless ret["deform"] == HEIGHT_FULL#without_deform_middle
         ret["outw"] = ret["inw"] if ret["deform"] == WITHOUT_DEFORM
+        ret["inx"] = 0 if ret["deform"] == WITHOUT_DEFORM && ret["edge"] == TATE #Ç‹Ç∆ÇﬂÇÈÇ∆Ç´2çsè„Ç…íçà”
+
       when RIGHT then
          ret["inx"] = ret["inw_tmp"].abs - ret["outw"]  unless ret["deform"] == HEIGHT_FULL
         ret["inx"] = ret["inw_tmp"] - ret["inw"] if ret["deform"] == HEIGHT_FULL
         ret["outw"] = ret["inw"] unless ret["deform"] == HEIGHT_FULL
         #ret["outw"] = ret["outw_tmp"] if ret["deform"] == PRIORITY_LONG
+        ret["inx"] = 0 if ret["deform"] == WITHOUT_DEFORM && ret["edge"] == TATE
+        ret["outx"] = ret["outw_tmp"] - ret["outw"] if ret["deform"] == WITHOUT_DEFORM && ret["edge"] == TATE
       when NONE then
     end
 
@@ -211,6 +217,7 @@ class Transform
     ret.delete("posh") if ret.has_key?("posh")
     ret.delete("deform") if ret.has_key?("deform")
     ret.delete("outh_tmp") if ret.has_key?("outh_tmp")
+    ret.delete("outw_tmp") if ret.has_key?("outw_tmp")
 
     ret.each {|key, value|
       ret[key] = 0 if value == nil

@@ -121,6 +121,7 @@ class Transform
     elsif ret["edge"] == TATE then
       ret["inw_tmp"] = ret["inw"]
       ret["inw"] = ret["inh"] / ret["outh"] * ret["outw"]
+      ret["outw_tmp"] = ret["outw"]
     end
     #ret["inx"] = (ret["inw"] - ret["outw"]) / 2.0
     return ret
@@ -178,11 +179,16 @@ class Transform
         ret["inx"] = 0
         ret["outw"] = ret["inw"] if ret["deform"] == WITHOUT_DEFORM
         ret["outx"] = 0 if ret["deform"] == WITHOUT_DEFORM
+        ret["outw"] = ret["inw_tmp"] if ret["deform"] == HEIGHT_FULL && ret["edge"] == TATE
+        ret["inw"] = ret["outw"] if ret["deform"] == HEIGHT_FULL && ret["edge"] == TATE
       when MID_W then
         ret["inx"] = (ret["inw"] - ret["outw"]) / 2 unless ret["deform"] == HEIGHT_FULL#without_deform_middle
         ret["outw"] = ret["inw"] if ret["deform"] == WITHOUT_DEFORM
         ret["inx"] = 0 if ret["deform"] == WITHOUT_DEFORM && ret["edge"] == TATE #Ç‹Ç∆ÇﬂÇÈÇ∆Ç´2çsè„Ç…íçà”
-        ret["inx"] = 0 if ret["deform"] == PRIORITY_LONG #&& ret["edge"] == TATE
+        ret["inx"] = 0 if ret["deform"] == PRIORITY_LONG
+        ret["inw"] = ret["inw_tmp"] if ret["deform"] == HEIGHT_FULL && ret["edge"] == TATE
+        ret["outw"] = ret["inw"] if ret["deform"] == HEIGHT_FULL && ret["edge"] == TATE
+        ret["outx"] = ( ret["outw_tmp"] - ret["outw"] ) / 2.0 if ret["deform"] == HEIGHT_FULL && ret["edge"] == TATE
       when RIGHT then
          ret["inx"] = ret["inw_tmp"].abs - ret["outw"]  unless ret["deform"] == HEIGHT_FULL
         ret["inx"] = ret["inw_tmp"] - ret["inw"] if ret["deform"] == HEIGHT_FULL
@@ -193,7 +199,11 @@ class Transform
         ret["inx"] = 0 if ret["deform"] == PRIORITY_LONG
         ret["outw"] = ret["outh"].to_f / ret["inh"] * ret["inw"] if ret["deform"] == PRIORITY_LONG
         ret["outx"] = ret["outw_tmp"] - ret["outw"] if ret["deform"] == PRIORITY_LONG
-        #ret["outw"] = ret["inw_tmp"] if ret["deform"] = HEIGHT_FULL && ret["edge"] == TATE
+        #ret["outw"] = ret["inw_tmp"] if ret["deform"] = HEIGHT_FULL && ret["edge"] == TATE #âΩåÃÇ©YOKOÇ‡à¯Ç¡Ç©Ç©Ç¡Çƒç¢ÇÈ
+        ret["outx"] = ret["outw"] - ret["inw_tmp"]  if ret["deform"] == HEIGHT_FULL && ret["edge"] == TATE
+        ret["inw"] = ret["inw_tmp"] if ret["deform"] == HEIGHT_FULL && ret["edge"] == TATE
+        ret["inx"] = 0 if ret["deform"] == HEIGHT_FULL && ret["edge"] == TATE
+        ret["outw"] = ret["outw"] - ret["outx"] if ret["deform"] == HEIGHT_FULL
       when NONE then
     end
 
@@ -226,6 +236,7 @@ class Transform
        ret["inh"] =(  ret["inw"].to_f  /    ret["outw"]  *    ret["outh"])  if ret["deform"] == PRIORITY_SHORT
        ret["iny"] = ( ret["inh_tmp"] - ret["inh"] ) / 2.0 if ret["deform"]  == PRIORITY_SHORT
        ret["outx"] = ( ret["outw_tmp"] - ret["outw"] ) / 2.0 if ret["deform"] == PRIORITY_LONG && ret["edge"] == TATE
+
       when LOW then
         #ret["outy"] = ret["inh"] - ret["outh"]
         #ret["outh"] += ret["inx"]
